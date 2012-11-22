@@ -47,8 +47,7 @@ module GPGME
     end
 
     def context_pointer
-      raise "context is alreafy released" if @ptr.nil?
-
+      raise "context is already released" if @ptr.nil?
       @ptr
     end
   end
@@ -578,15 +577,21 @@ module GPGME
     err
   end
 
-  def self.gpgme_data_new_from_fd(rdata, fd)
-    buf = ::FFI::Buffer.new :pointer, 1
-    err = FFI.gpgme_data_new_from_fd buf, fd
-
-    if gpgme_err_code(err) == GPG_ERR_NO_ERROR
-      rdata << Data.new_from_struct(buf.read_pointer)
+  if RUBY_PLATFORM == "java"
+    def self.gpgme_data_new_from_fd(rdata, fd)
+      raise NotImplementedError, "GPGME::gpgme_data_new_from_fd cannot be used on JRuby due to NIO API limitations."
     end
+  else
+    def self.gpgme_data_new_from_fd(rdata, fd)
+      buf = ::FFI::Buffer.new :pointer, 1
+      err = FFI.gpgme_data_new_from_fd buf, fd
 
-    err
+      if gpgme_err_code(err) == GPG_ERR_NO_ERROR
+        rdata << Data.new_from_struct(buf.read_pointer)
+      end
+
+      err
+    end
   end
 
   def self.gpgme_data_new_from_cbs(rdata, ruby_cbs, ruby_handle)
@@ -632,7 +637,7 @@ module GPGME
     bytes = FFI.gpgme_data_read data.context_pointer, buf, length
 
     if bytes == -1
-      raise "gpgme_data_read failed with error #{FFI.errno}"
+      raise "gpgme_data_read failed with error #{::FFI.errno}"
     end
 
     return nil if bytes == 0
@@ -649,7 +654,7 @@ module GPGME
     bytes = FFI.gpgme_data_write data.context_pointer, buf, length
 
     if bytes == -1
-      raise "gpgme_data_write failed with error #{FFI.errno}"
+      raise "gpgme_data_write failed with error #{::FFI.errno}"
     end
 
     bytes

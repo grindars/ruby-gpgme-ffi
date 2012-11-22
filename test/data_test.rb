@@ -29,6 +29,8 @@ describe GPGME::Data do
     end
 
     it "creates a data from file descriptor" do
+      skip "cannot be implemented on JRuby" if RUBY_PLATFORM == "java"
+
       # magic filedescriptor
       File.open(__FILE__) do |f|
         data = GPGME::Data.new(f.fileno)

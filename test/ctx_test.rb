@@ -55,13 +55,13 @@ describe GPGME::Ctx do
 
         @var += 1
 
-        io = IO.for_fd(fd, 'w')
+        io = ::FFI::IO.for_fd(fd, 'w')
         io.puts "wrong pasword"
         io.flush
       end
 
       def with_correct_pass_func(obj,par2,par3,prev_was_bad,fd)
-        io = IO.for_fd(fd, 'w')
+        io = ::FFI::IO.for_fd(fd, 'w')
         io.puts "gpgme"
         io.flush
       end
@@ -94,7 +94,7 @@ describe GPGME::Ctx do
     it ":passphrase_callback_value passes a value to the callback function" do
       def checking_value(value,par2,par3,par4,fd)
         assert_equal "superman", value
-        io = IO.for_fd(fd, 'w')
+        io = ::FFI::IO.for_fd(fd, 'w')
         io.puts "gpgme"
         io.flush
       end
@@ -308,6 +308,8 @@ describe GPGME::Ctx do
 
   describe "key generation" do
     it "generates a key according to specifications" do
+      skip "long test" if ENV.include? "QUICK_TESTING"
+
       key = <<-RUBY
 <GnupgKeyParms format="internal">
 Key-Type: DSA

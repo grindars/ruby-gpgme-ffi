@@ -9,7 +9,7 @@ require 'gpgme'
 #   $stderr.flush
 #   begin
 #     system('stty -echo')
-#     io = IO.for_fd(fd, 'w')
+#     io = ::FFI::IO.for_fd(fd, 'w')
 #     io.puts(gets)
 #     io.flush
 #   ensure

@@ -163,7 +163,7 @@ module GPGME
     #
     # @example this method will simply return +maria+ as password.
     #  def pass_function(obj, uid_hint, passphrase_info, prev_was_bad, fd)
-    #    io = IO.for_fd(fd, 'w')
+    #    io = ::FFI::IO.for_fd(fd, 'w')
     #    io.puts "maria"
     #    io.flush
     #  end
@@ -174,7 +174,7 @@ module GPGME
     #    $stderr.flush
     #    begin
     #      system('stty -echo')
-    #      io = IO.for_fd(fd, 'w')
+    #      io = ::FFI::IO.for_fd(fd, 'w')
     #      io.puts(gets)
     #      io.flush
     #    ensure
@@ -453,7 +453,7 @@ keylist_mode=#{KEYLIST_MODE_NAMES[keylist_mode]}>"
     private
 
     def self.pass_function(pass, uid_hint, passphrase_info, prev_was_bad, fd)
-      io = IO.for_fd(fd, 'w')
+      io = ::FFI::IO.for_fd(fd, 'w')
       io.puts pass
       io.flush
     end

@@ -9,7 +9,7 @@ require 'gpgme'
 #   $stderr.flush
 #   begin
 #     system('stty -echo')
-#     io = IO.for_fd(fd, 'w')
+#     io = ::FFI::IO.for_fd(fd, 'w')
 #     io.puts(gets)
 #     io.flush
 #   ensure
@@ -48,14 +48,14 @@ def editfunc(hook, status, args, fd)
       $stderr.flush
       line = gets
     end until line =~ /\A\s*[ny]\s*\z/
-    io = IO.for_fd(fd)
+    io = ::FFI::IO.for_fd(fd)
     io.puts(line.strip)
     io.flush
   when GPGME::GPGME_STATUS_GET_LINE, GPGME::GPGME_STATUS_GET_HIDDEN
     $stderr.write("#{args}: ")
     $stderr.flush
     line = gets
-    io = IO.for_fd(fd)
+    io = ::FFI::IO.for_fd(fd)
     io.puts(line)
     io.flush
   else
