@@ -17,9 +17,9 @@ task :compile do
   end
 end
 
-task :default => [:test]
+task :default => [:compile, :test]
 
-Rake::TestTask.new(:test => :compile) do |t|
+Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
   t.pattern = "test/**/*_test.rb"
   t.verbose = true
