@@ -1,16 +1,16 @@
 Gem::Specification.new do |s|
-  s.name              = 'gpgme'
-  s.version           = '2.0.1'
-  s.authors           = ['Daiki Ueno', 'Albert Llop']
-  s.date              = '2012-05-14'
-  s.email             = 'ueno@unixuser.org'
+  s.name              = 'gpgme-ffi'
+  s.version           = '3.0.0'
+  s.authors           = ['Daiki Ueno', 'Albert Llop', 'Sergey Gridasov']
+  s.date              = '2012-11-23'
+  s.email             = 'grindars@gmail.com'
   s.extensions        = ['ext/gpgme/extconf.rb']
   s.files             = Dir['{lib,ext,test,examples}/**/*']
   s.has_rdoc          = true
   s.rubyforge_project = 'ruby-gpgme'
   s.homepage          = 'http://github.com/ueno/ruby-gpgme'
   s.require_paths     = ['lib']
-  s.summary           = 'Ruby binding of GPGME.'
+  s.summary           = 'FFI binding of GPGME.'
   s.description       = %q{Ruby-GPGME is a Ruby language binding of GPGME (GnuPG
 Made Easy). GnuPG Made Easy (GPGME) is a library designed to make access to
 GnuPG easier for applications. It provides a High-Level Crypto API for
