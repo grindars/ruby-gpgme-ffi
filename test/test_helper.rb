@@ -13,7 +13,6 @@ require 'minitest/autorun'
 require 'minitest/spec'
 require 'minitest/pride'
 require 'mocha'
-#require 'ruby-debug'
 require 'gpgme'
 
 require File.dirname(__FILE__) + "/support/resources"

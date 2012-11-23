@@ -1,7 +1,4 @@
-#$:.push File.expand_path("../..", __FILE__) # C extension is in the root
-#require 'gpgme_n'
-require 'gpgme_ffi_enums'
-require 'gpgme_ffi'
+require 'gpgme/ffi'
 
 # TODO without this call one can't GPGME::Ctx.new, find out why
 GPGME::gpgme_check_version(nil)
