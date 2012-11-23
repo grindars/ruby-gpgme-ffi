@@ -4,7 +4,8 @@ Gem::Specification.new do |s|
   s.authors           = ['Daiki Ueno', 'Albert Llop']
   s.date              = '2012-05-14'
   s.email             = 'ueno@unixuser.org'
-  s.files             = Dir['{lib,test,examples}/**/*']
+  s.extensions        = ['ext/gpgme/extconf.rb']
+  s.files             = Dir['{lib,ext,test,examples}/**/*']
   s.has_rdoc          = true
   s.rubyforge_project = 'ruby-gpgme'
   s.homepage          = 'http://github.com/ueno/ruby-gpgme'

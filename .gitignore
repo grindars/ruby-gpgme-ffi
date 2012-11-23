@@ -4,3 +4,6 @@ mkmf.log
 Makefile
 coverage
 Gemfile.lock
+/lib/gpgme/ffi/enums.rb
+/tmp
+/ext/gpgme/libgpgme_gem.so
