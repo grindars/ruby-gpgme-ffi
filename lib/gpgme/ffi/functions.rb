@@ -150,14 +150,14 @@ module GPGME
         0
       else
 
-        buffer.write_bytes data, 0, data.length
+        buffer.put_bytes 0, data, 0, data.length
 
         data.length
       end
     end
 
     cbs[:write] = FFI::Function.new(:ssize_t, [ :pointer, :pointer, :size_t ]) do |handle, buffer, size|
-      data = buffer.read_bytes size
+      data = buffer.get_bytes 0, size
 
       ruby_cbs.write ruby_handle, data, size
     end
@@ -187,13 +187,13 @@ module GPGME
 
     return nil if bytes == 0
 
-    buf.read_bytes bytes
+    buf.get_bytes 0, bytes
   end
 
   def self.gpgme_data_write(data, buffer, length)
     buf = FFI::Buffer.new(:uint8, (length > 0) ? length : 1)
     if length > 0
-      buf.write_bytes buffer, 0, length
+      buf.put_bytes 0, buffer, 0, length
     end
 
     bytes = Library.gpgme_data_write data.context_pointer, buf, length
