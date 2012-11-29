@@ -12,5 +12,13 @@ end
 
 system "gpg-agent", "--version"
 
+if %x{uname} == "Darwin\n"
+  ARCH_CFLAGS="-arch i386 -arch x86_64"
+  TARGET_IS_FAT=true
+else
+  ARCH_CFLAGS=""
+  TARGET_IS_FAT=false
+end
+
 template = ERB.new File.read("#{SRC}/Makefile.in")
 File.write "#{BUILD}/Makefile", template.result(binding)
