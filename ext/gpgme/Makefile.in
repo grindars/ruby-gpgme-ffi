@@ -19,11 +19,15 @@ clean:
 	rm -f ${BUILD}/libgpgme_gem.so ${BUILD}/enums.rb
 
 ${BUILD}/libgpgme_gem.so: ${BUILD}/libgpgme_ext.a ${BUILD}/libgpg-error_ext.a ${BUILD}/libassuan_ext.a
-<% if RUBY_PLATFORM =~ /darwin/ %>
-	gcc -shared -o $@ -Wl,-force_load,${BUILD}/libgpgme_ext.a ${BUILD}/libgpg-error_ext.a ${BUILD}/libassuan_ext.a
-<% else %>
-	gcc -s -shared -o $@ -Wl,--whole-archive ${BUILD}/libgpgme_ext.a -Wl,--no-whole-archive ${BUILD}/libgpg-error_ext.a ${BUILD}/libassuan_ext.a
-<% end %>
+	for file in $^; do \
+		bn=`basename $$file _ext.a` && \
+		rm -rf ${BUILD}/link-$$bn && \
+		mkdir ${BUILD}/link-$$bn && \
+		cd ${BUILD}/link-$$bn && \
+		ar x $$file; \
+	done
+	gcc -shared -o $@ $(foreach ext,libgpg-error libgpgme libassuan,${BUILD}/link-$(ext)/*.o) -lc
+	rm -rf $(addprefix ${BUILD}/link-,libgpg-error libgpgme libassuan)
 
 ${BUILD}/%_ext.a: ${PREFIX}/lib/%.a
 	cp $< $@
@@ -48,7 +52,7 @@ ${BUILD}/enums.rb: ${SRC}/extract_enums.rb ${GPG_ERROR}/src/gpg-error.h ${GPGME}
 
 install: all
 	if [ "${SRC}" != "${BUILD}" ]; then \
-		cp ${BUILD}/libgpgme_gem.so ${SRC}/libgpgme_gem.so; \
+		cp ${BUILD}/libgpgme_gem.so ${SRC}; \
 	fi
 	cp ${BUILD}/enums.rb ${SRC}/../../lib/gpgme/ffi/enums.rb
 
