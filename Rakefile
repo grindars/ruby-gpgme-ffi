@@ -13,7 +13,7 @@ task :compile do
 
   Dir.chdir('tmp') do
     system "ruby #{File.dirname(__FILE__)}/ext/gpgme/extconf.rb"
-    system "make"
+    system "make all install"
   end
 end
 

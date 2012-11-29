@@ -3,7 +3,7 @@ require 'ffi'
 module GPGME::Library
   extend FFI::Library
 
-  ffi_lib 'libgpgme.so.11'
+  ffi_lib File.dirname(File.expand_path(__FILE__)) + "/../../../ext/gpgme/libgpgme_gem.so"
 
   class SigNotation < FFI::Struct
     layout :next,      :pointer,

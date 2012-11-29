@@ -19,7 +19,11 @@ clean:
 	rm -f ${BUILD}/libgpgme_gem.so ${BUILD}/enums.rb
 
 ${BUILD}/libgpgme_gem.so: ${BUILD}/libgpgme_ext.a ${BUILD}/libgpg-error_ext.a ${BUILD}/libassuan_ext.a
+<% if RUBY_PLATFORM =~ /darwin/ %>
+	gcc -shared -o $@ -Wl,-force_load,${BUILD}/libgpgme_ext.a ${BUILD}/libgpg-error_ext.a ${BUILD}/libassuan_ext.a
+<% else %>
 	gcc -s -shared -o $@ -Wl,--whole-archive ${BUILD}/libgpgme_ext.a -Wl,--no-whole-archive ${BUILD}/libgpg-error_ext.a ${BUILD}/libassuan_ext.a
+<% end %>
 
 ${BUILD}/%_ext.a: ${PREFIX}/lib/%.a
 	cp $< $@
