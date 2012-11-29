@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name              = 'gpgme-ffi'
-  s.version           = '3.0.0'
+  s.version           = '3.0.1'
   s.authors           = ['Daiki Ueno', 'Albert Llop', 'Sergey Gridasov']
-  s.date              = '2012-11-23'
+  s.date              = '2012-11-29'
   s.email             = 'grindars@gmail.com'
   s.extensions        = ['ext/gpgme/extconf.rb']
   s.files             = Dir['{lib,ext,test,examples}/**/*']
