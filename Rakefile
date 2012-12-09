@@ -2,9 +2,10 @@ require 'bundler'
 Bundler::GemHelper.install_tasks
 
 require 'rake/testtask'
-require 'rcov/rcovtask'
-require 'yard'
-
+if RUBY_ENGINE == 'ruby'
+    require 'rcov/rcovtask'
+    require 'yard'
+end
 
 desc "Re-compile the extensions"
 task :compile do
@@ -26,12 +27,14 @@ Rake::TestTask.new(:test) do |t|
 end
 Rake::Task['test'].comment = "Run all tests"
 
-YARD::Rake::YardocTask.new
+if RUBY_ENGINE == 'ruby'
+    YARD::Rake::YardocTask.new
 
-Rcov::RcovTask.new do |t|
-  t.libs << 'test'
-  t.pattern = "test/**/*_test.rb"
-  t.verbose = true
-  t.rcov_opts = ["-x gems"]
+    Rcov::RcovTask.new do |t|
+    t.libs << 'test'
+    t.pattern = "test/**/*_test.rb"
+    t.verbose = true
+    t.rcov_opts = ["-x gems"]
+    end
 end
 

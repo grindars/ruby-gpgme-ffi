@@ -19,6 +19,8 @@ encryption, decryption, signing, signature verification and key management.}
   s.add_dependency             "ffi",       "~> 1.2.0"
   s.add_development_dependency "mocha",     "~> 0.9.12"
   s.add_development_dependency "minitest",  "~> 2.1.0"
-  s.add_development_dependency "yard",      "~> 0.6.7"
-  s.add_development_dependency "rcov",      "~> 0.9.9"
+  if RUBY_ENGINE == "ruby"
+    s.add_development_dependency "yard",      "~> 0.6.7"
+    s.add_development_dependency "rcov",      "~> 0.9.9"
+  end
 end

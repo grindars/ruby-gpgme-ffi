@@ -1,4 +1,5 @@
 require 'ffi'
+require 'ffi/types'
 
 module GPGME::Library
   extend FFI::Library
