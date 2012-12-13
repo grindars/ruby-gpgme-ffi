@@ -338,7 +338,7 @@ module GPGME
 
 
   def self.gpgme_op_sign_result(context)
-    struct = Library::SignResult.new Library::gpgme_op_verify_result(context.context_pointer)
+    struct = Library::SignResult.new Library::gpgme_op_sign_result(context.context_pointer)
 
     SignResult.new_from_struct struct
   end
